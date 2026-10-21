@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Cỗ Máy Bói Tình Yêu - Livestream TikTok</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Hiệu ứng trái tim nền bay nhẹ -->
+    <div id="floating-hearts-bg" class="hearts-bg"></div>
+
+    <div class="app-container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo-heart">💖</div>
+            <h1 class="title">BÓI TÌNH YÊU</h1>
+            <p class="subtitle-tag">LOVE DESTINY MACHINE</p>
+        </header>
+
+        <!-- Form nhập thông tin -->
+        <main class="main-content">
+            <form id="love-form" class="card form-card" onsubmit="return false;">
+                <!-- Person 1 -->
+                <div class="person-box person-1">
+                    <div class="person-header">
+                        <span class="avatar-icon">👦</span>
+                        <h3>NGƯỜI THỨ NHẤT</h3>
+                    </div>
+                    <div class="input-group">
+                        <label for="p1-name">Họ và tên:</label>
+                        <input type="text" id="p1-name" placeholder="Ví dụ: Nguyễn Văn A" autocomplete="off" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="p1-dob">Ngày sinh:</label>
+                        <input type="date" id="p1-dob" required>
+                    </div>
+                </div>
+
+                <div class="heart-divider">💘</div>
+
+                <!-- Person 2 -->
+                <div class="person-box person-2">
+                    <div class="person-header">
+                        <span class="avatar-icon">👧</span>
+                        <h3>NGƯỜI THỨ HAI</h3>
+                    </div>
+                    <div class="input-group">
+                        <label for="p2-name">Họ và tên:</label>
+                        <input type="text" id="p2-name" placeholder="Ví dụ: Trần Thị B" autocomplete="off" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="p2-dob">Ngày sinh:</label>
+                        <input type="date" id="p2-dob" required>
+                    </div>
+                </div>
+
+                <button type="button" id="btn-fortune" class="btn-submit">
+                    <span class="btn-sparkle">✨</span> GIẢI MÃ DUYÊN PHẬN <span class="btn-sparkle">✨</span>
+                </button>
+            </form>
+
+            <!-- Màn hình kết quả -->
+            <div id="result-section" class="card result-card hidden">
+                <div class="result-header">
+                    <span class="badge-tag">VŨ TRỤ ĐÃ LÊN TIẾNG</span>
+                    <!-- Tên ngắt thành 2 dòng với trái tim ở giữa -->
+                    <div id="pair-names-display" class="pair-names-vertical">
+                        <span id="p1-display">Người 1</span>
+                        <span class="pair-heart-divider">💖</span>
+                        <span id="p2-display">Người 2</span>
+                    </div>
+                </div>
+
+                <!-- Trái tim đổ đầy % (Liquid Fill Heart) -->
+                <div class="score-circle-container">
+                    <div class="score-heart-container">
+                        <!-- SVG Khung Trái Tim -->
+                        <svg class="heart-bg-svg" viewBox="0 0 32 29.6">
+                            <path d="M23.6,0c-3.4,0-6.3,2.7-7.6,5.6C14.7,2.7,11.8,0,8.4,0C3.8,0,0,3.8,0,8.4 c0,9.4,9.5,11.9,16,21.2 c6.5-9.3,16-11.8,16-21.2C32,3.8,28.2,0,23.6,0z"/>
+                        </svg>
+                        <!-- SVG Phần nước đỏ dâng lên -->
+                        <div id="heart-fill-mask" class="heart-fill-svg" style="clip-path: polygon(0 100%, 100% 100%, 100% 100%, 0 100%);">
+                            <svg class="heart-fill-inner" viewBox="0 0 32 29.6">
+                                <defs>
+                                    <linearGradient id="heartGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" stop-color="#ff4d6d" />
+                                        <stop offset="100%" stop-color="#ff0054" />
+                                    </linearGradient>
+                                </defs>
+                                <path d="M23.6,0c-3.4,0-6.3,2.7-7.6,5.6C14.7,2.7,11.8,0,8.4,0C3.8,0,0,3.8,0,8.4 c0,9.4,9.5,11.9,16,21.2 c6.5-9.3,16-11.8,16-21.2C32,3.8,28.2,0,23.6,0z"/>
+                            </svg>
+                        </div>
+                        <!-- Số % -->
+                        <div class="heart-score-text">
+                            <span id="score-number">0</span>
+                            <span class="percent-sign">%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Danh hiệu (Chữ to) -->
+                <div class="title-box">
+                    <h3 id="result-title">Chờ giải mã...</h3>
+                </div>
+
+                <!-- Lời khuyên vũ trụ hôm nay -->
+                <div class="cosmic-advice-box">
+                    <div class="advice-header">🌌 LỜI KHUYÊN VŨ TRỤ HÔM NAY</div>
+                    <p id="result-advice">Đang kết nối tín hiệu vũ trụ...</p>
+                </div>
+
+                <!-- Chỉ số thành phần -->
+                <div class="sub-stats-grid">
+                    <div class="stat-item">
+                        <span class="stat-label">💓 Rung động: <strong id="val-attraction">0%</strong></span>
+                        <div class="bar-bg"><div id="bar-attraction" class="bar-fill"></div></div>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">🧠 Thấu hiểu: <strong id="val-understanding">0%</strong></span>
+                        <div class="bar-bg"><div id="bar-understanding" class="bar-fill"></div></div>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">🔥 Lãng mạn: <strong id="val-romance">0%</strong></span>
+                        <div class="bar-bg"><div id="bar-romance" class="bar-fill"></div></div>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">🌱 Gắn kết: <strong id="val-future">0%</strong></span>
+                        <div class="bar-bg"><div id="bar-future" class="bar-fill"></div></div>
+                    </div>
+                </div>
+
+                <button type="button" id="btn-recheck" class="btn-secondary">🔮 Bói Cặp Khác</button>
+            </div>
+
+            <!-- Bảng xếp hạng -->
+            <section class="card leaderboard-card">
+                <div class="lb-header">
+                    <div class="lb-title">
+                        <span>🏆</span> BẢNG XẾP HẠNG TOP 10 <span>🏆</span>
+                    </div>
+                    <button type="button" id="btn-reset-lb" class="btn-reset-sm">Đặt lại</button>
+                </div>
+
+                <div id="leaderboard-list" class="lb-list">
+                    <!-- JS sẽ điền danh sách vào đây -->
+                </div>
+            </section>
+        </main>
+
+        <footer class="footer">
+            <p>Trò chơi giải trí vui nhộn khi livestream TikTok 💕</p>
+        </footer>
+    </div>
+
+    <!-- Màn hình chờ (Loading Overlay) -->
+    <div id="loading-overlay" class="overlay hidden">
+        <div class="loading-box">
+            <div class="pulsing-heart">💖</div>
+            <p id="loading-text" class="loading-msg">Vũ trụ đang kết nối duyên phận...</p>
+        </div>
+    </div>
+
+    <!-- Hiệu ứng Nổ Trái Tim Đặc Biệt 100% -->
+    <div id="explosion-overlay" class="overlay explosion-overlay hidden">
+        <div class="explosion-container" id="explosion-container"></div>
+        <div class="explosion-banner">
+            <h1 class="explosion-title">💥 ĐỊNH MỆNH 100% 💥</h1>
+            <p class="explosion-subtitle">👑 CẶP ĐÔI HUYỀN THOẠI VŨ TRỤ 👑</p>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

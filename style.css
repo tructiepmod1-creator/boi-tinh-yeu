@@ -1,0 +1,703 @@
+/* RESET & BASE */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Nunito', sans-serif;
+    -webkit-tap-highlight-color: transparent;
+}
+
+body {
+    background: linear-gradient(135deg, #ffe6ea 0%, #ffc0cb 100%);
+    color: #4a2c35;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* Ép các thành phần luôn nằm từ trên xuống, không bị trôi sang ngang */
+    padding: 16px 8px;
+    overflow-x: hidden;
+    position: relative;
+}
+
+/* Hiệu ứng trái tim trôi nhẹ ở nền */
+.hearts-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+}
+
+.floating-heart {
+    position: absolute;
+    color: rgba(255, 105, 180, 0.35);
+    font-size: 18px;
+    user-select: none;
+    animation: floatUp linear infinite;
+}
+
+@keyframes floatUp {
+    0% {
+        transform: translateY(105vh) scale(0.8) rotate(0deg);
+        opacity: 0;
+    }
+    10% {
+        opacity: 0.8;
+    }
+    90% {
+        opacity: 0.8;
+    }
+    100% {
+        transform: translateY(-10vh) scale(1.2) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+/* Container chính chuẩn khung hình dọc livestream ở chính giữa */
+.app-container {
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+/* Header */
+.header {
+    text-align: center;
+    padding: 6px 0;
+}
+
+.logo-heart {
+    font-size: 38px;
+    animation: pulseGlow 1.8s infinite ease-in-out;
+}
+
+.title {
+    font-size: 26px;
+    font-weight: 900;
+    color: #ff2e63;
+    text-shadow: 2px 2px 0px #ffffff;
+    letter-spacing: 1px;
+}
+
+.subtitle-tag {
+    font-size: 11px;
+    font-weight: 800;
+    color: #e84393;
+    letter-spacing: 2px;
+}
+
+/* Card chung */
+.card {
+    background: rgba(255, 255, 255, 0.94);
+    border-radius: 20px;
+    padding: 16px;
+    box-shadow: 0 8px 24px rgba(255, 105, 180, 0.2);
+    border: 2px solid #fff;
+    backdrop-filter: blur(5px);
+}
+
+/* Form Styles */
+.form-card {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.person-box {
+    background: #fff0f3;
+    border-radius: 14px;
+    padding: 12px;
+    border: 1.5px solid #ffccd5;
+}
+
+.person-header {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 8px;
+}
+
+.person-header h3 {
+    font-size: 13px;
+    font-weight: 800;
+    color: #d63384;
+}
+
+.input-group {
+    margin-bottom: 8px;
+}
+
+.input-group:last-child {
+    margin-bottom: 0;
+}
+
+.input-group label {
+    display: block;
+    font-size: 12px;
+    font-weight: 700;
+    color: #6c757d;
+    margin-bottom: 3px;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1.5px solid #ffb3c1;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 700;
+    color: #2b2b2b;
+    outline: none;
+    background: #ffffff;
+    transition: all 0.2s;
+}
+
+.input-group input:focus {
+    border-color: #ff2e63;
+    box-shadow: 0 0 0 3px rgba(255, 46, 99, 0.15);
+}
+
+.heart-divider {
+    text-align: center;
+    font-size: 20px;
+    margin: -6px 0;
+}
+
+/* Nút Bói chính */
+.btn-submit {
+    width: 100%;
+    padding: 14px;
+    background: linear-gradient(135deg, #ff4d6d 0%, #ff0054 100%);
+    color: #ffffff;
+    border: none;
+    border-radius: 14px;
+    font-size: 16px;
+    font-weight: 900;
+    cursor: pointer;
+    box-shadow: 0 6px 18px rgba(255, 0, 84, 0.35);
+    transition: transform 0.1s;
+}
+
+.btn-submit:active {
+    transform: scale(0.97);
+}
+
+/* Màn hình kết quả */
+.result-card {
+    text-align: center;
+    animation: fadeIn 0.4s ease-out;
+}
+
+.result-header .badge-tag {
+    background: #ffe3e8;
+    color: #ff2e63;
+    font-weight: 800;
+    font-size: 11px;
+    padding: 3px 10px;
+    border-radius: 20px;
+}
+
+#pair-names-display {
+    font-size: 18px;
+    font-weight: 900;
+    color: #800020;
+    margin-top: 6px;
+}
+
+.score-circle-container {
+    display: flex;
+    justify-content: center;
+    margin: 14px 0;
+}
+
+.score-circle {
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #ff2e63, #ff758f);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 6px 20px rgba(255, 46, 99, 0.4);
+    border: 4px solid #ffffff;
+}
+
+#score-number {
+    font-size: 42px;
+    font-weight: 900;
+    line-height: 1;
+}
+
+.percent-sign {
+    font-size: 20px;
+    font-weight: 900;
+}
+
+.title-box h3 {
+    font-size: 17px;
+    font-weight: 900;
+    color: #ff0054;
+    margin-bottom: 8px;
+}
+
+.sub-stats-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 14px;
+}
+
+.stat-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.stat-label {
+    width: 125px;
+    text-align: left;
+}
+
+.bar-bg {
+    flex: 1;
+    height: 10px;
+    background: #ffe3e8;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.bar-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #ff758f, #ff0054);
+    border-radius: 10px;
+    transition: width 1s ease-out;
+}
+
+.btn-secondary {
+    width: 100%;
+    padding: 10px;
+    background: #f8f9fa;
+    border: 1.5px solid #dee2e6;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 800;
+    color: #495057;
+    cursor: pointer;
+}
+
+/* Bảng xếp hạng */
+.leaderboard-card {
+    padding: 14px;
+}
+
+.lb-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    padding-bottom: 6px;
+    border-bottom: 1.5px solid #ffe3e8;
+}
+
+.lb-title {
+    font-size: 14px;
+    font-weight: 900;
+    color: #d63384;
+}
+
+.btn-reset-sm {
+    background: transparent;
+    border: none;
+    color: #adb5bd;
+    font-size: 11px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.lb-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.lb-item {
+    display: flex;
+    align-items: flex-start;
+    background: #fff8f9;
+    padding: 8px 10px;
+    border-radius: 10px;
+    font-size: 12px;
+    gap: 6px;
+}
+
+.lb-rank {
+    width: 22px;
+    font-weight: 900;
+    color: #ff2e63;
+    flex-shrink: 0;
+    padding-top: 1px;
+}
+
+.lb-names {
+    flex: 1;
+    font-weight: 700;
+    color: #2b2b2b;
+    white-space: normal;
+    word-break: break-word;
+    line-height: 1.35;
+}
+
+.lb-score {
+    font-weight: 900;
+    color: #ff0054;
+    flex-shrink: 0;
+    padding-top: 1px;
+    margin-left: 4px;
+}
+
+.lb-date {
+    font-size: 10px;
+    color: #999;
+    flex-shrink: 0;
+    padding-top: 2px;
+}
+
+.lb-empty {
+    text-align: center;
+    font-size: 12px;
+    color: #888;
+    padding: 10px 0;
+}
+
+.footer {
+    text-align: center;
+    font-size: 11px;
+    color: #aa7080;
+    padding: 4px 0;
+}
+
+/* Khung Lời khuyên từ vũ trụ */
+.cosmic-advice-box {
+    background: linear-gradient(135deg, #2b1055 0%, #7597de 100%);
+    color: #ffffff;
+    border-radius: 12px;
+    padding: 12px 14px;
+    margin-bottom: 14px;
+    text-align: left;
+    box-shadow: 0 4px 15px rgba(43, 16, 85, 0.25);
+    border: 1px solid #a29bfe;
+}
+
+.advice-header {
+    font-size: 11px;
+    font-weight: 900;
+    letter-spacing: 1.5px;
+    color: #ffeaa7;
+    margin-bottom: 4px;
+    text-transform: uppercase;
+}
+
+#result-advice {
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 1.4;
+    color: #f1f2f6;
+}
+
+/* Overlay & Loading */
+.overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0, 0, 0, 0.65);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+    backdrop-filter: blur(3px);
+}
+
+.loading-box {
+    background: white;
+    padding: 24px 30px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+.pulsing-heart {
+    font-size: 50px;
+    animation: heartPulse 0.8s infinite alternate ease-in-out;
+}
+
+@keyframes heartPulse {
+    0% { transform: scale(0.9); }
+    100% { transform: scale(1.25); }
+}
+
+.loading-msg {
+    margin-top: 10px;
+    font-size: 14px;
+    font-weight: 800;
+    color: #ff2e63;
+}
+
+/* Nổ Trái Tim 100% */
+.explosion-overlay {
+    background: rgba(255, 192, 203, 0.85);
+    z-index: 1000;
+}
+
+.explosion-banner {
+    position: relative;
+    z-index: 1002;
+    text-align: center;
+    animation: bannerPop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.explosion-title {
+    font-size: 32px;
+    font-weight: 900;
+    color: #ff0054;
+    text-shadow: 2px 2px 0 #fff, -2px -2px 0 #fff;
+}
+
+.explosion-subtitle {
+    font-size: 15px;
+    font-weight: 900;
+    color: #800020;
+    margin-top: 6px;
+}
+
+.explosion-heart-particle {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    pointer-events: none;
+    font-size: 24px;
+    animation: explodeParticle 2.5s ease-out forwards;
+}
+
+@keyframes explodeParticle {
+    0% {
+        transform: translate(-50%, -50%) scale(0.5) rotate(0deg);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(var(--tx), var(--ty)) scale(1.6) rotate(var(--rot));
+        opacity: 0;
+    }
+}
+
+@keyframes bannerPop {
+    0% { transform: scale(0); }
+    100% { transform: scale(1); }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10deg); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.hidden {
+    display: none !important;
+}
+/* Tên cặp đôi: Tên 1 dòng, trái tim ở giữa, Tên 2 dòng tiếp theo */
+#pair-names-display {
+    font-size: 16px;
+    font-weight: 900;
+    color: #800020;
+    margin-top: 8px;
+    line-height: 1.5;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+}
+
+.pair-heart-divider {
+    font-size: 20px;
+    animation: pulseGlow 1.5s infinite ease-in-out;
+}
+
+/* Biến hình vòng tròn thành Trái Tim đổ đầy % (Liquid Fill Heart) */
+.score-circle-container {
+    display: flex;
+    justify-content: center;
+    margin: 16px 0;
+}
+
+.score-heart-container {
+    position: relative;
+    width: 120px;
+    height: 110px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    filter: drop-shadow(0 6px 16px rgba(255, 46, 99, 0.4));
+}
+
+/* Hình trái tim nền khung */
+.heart-bg-svg {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    fill: #ffe3e8;
+    stroke: #ffffff;
+    stroke-width: 4px;
+}
+
+/* Phần nước đỏ dâng lên trong trái tim theo % */
+.heart-fill-svg {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    clip-path: polygon(0 100%, 100% 100%, 100% 100%, 0 100%);
+    transition: clip-path 1.5s cubic-bezier(0.1, 0.8, 0.3, 1);
+}
+
+.heart-fill-inner {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    fill: url(#heartGradient);
+}
+
+/* Con số hiển thị % nổi bật đè lên trên trái tim */
+.heart-score-text {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: baseline;
+    color: #ffffff;
+    text-shadow: 0 2px 6px rgba(0,0,0,0.3);
+}
+
+#score-number {
+    font-size: 38px;
+    font-weight: 900;
+    line-height: 1;
+}
+
+.percent-sign {
+    font-size: 18px;
+    font-weight: 900;
+}
+
+/* Làm phần tên danh hiệu (Sự tin cậy tuyệt đối...) to hơn hẳn */
+.title-box h3 {
+    font-size: 22px;
+    font-weight: 900;
+    color: #ff0054;
+    margin-bottom: 10px;
+    text-shadow: 1px 1px 0px #fff;
+    letter-spacing: 0.5px;
+}
+
+/* Tên 2 người ngắt dòng với trái tim ở giữa */
+.pair-names-vertical {
+    font-size: 16px;
+    font-weight: 900;
+    color: #800020;
+    margin-top: 8px;
+    line-height: 1.4;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+}
+
+.pair-heart-divider {
+    font-size: 18px;
+    animation: pulseGlow 1.5s infinite ease-in-out;
+}
+
+/* Hiệu ứng Trái Tim Đổ Đầy % (Liquid Fill Heart) */
+.score-circle-container {
+    display: flex;
+    justify-content: center;
+    margin: 16px 0;
+}
+
+.score-heart-container {
+    position: relative;
+    width: 130px;
+    height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    filter: drop-shadow(0 6px 16px rgba(255, 46, 99, 0.4));
+}
+
+.heart-bg-svg {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    fill: #ffe3e8;
+    stroke: #ffffff;
+    stroke-width: 3px;
+}
+
+.heart-fill-svg {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    transition: clip-path 0.1s linear;
+}
+
+.heart-fill-inner {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    fill: url(#heartGradient);
+}
+
+.heart-score-text {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: baseline;
+    color: #ffffff;
+    text-shadow: 0 2px 6px rgba(0,0,0,0.3);
+}
+
+#score-number {
+    font-size: 40px;
+    font-weight: 900;
+    line-height: 1;
+}
+
+.percent-sign {
+    font-size: 18px;
+    font-weight: 900;
+}
+
+/* Tiêu đề danh hiệu to nổi bật */
+.title-box h3 {
+    font-size: 22px;
+    font-weight: 900;
+    color: #ff0054;
+    margin-bottom: 12px;
+    text-shadow: 1px 1px 0px #fff;
+}
